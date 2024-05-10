@@ -7,5 +7,4 @@ export type Application = {
   name: string
   users: User[]
   isActive: boolean
-  price: number
 }
