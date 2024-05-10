@@ -2,6 +2,7 @@ import { For, Show, createResource, createSignal } from "solid-js"
 import { applicationFactory } from "src/utils/factories"
 import { Application } from "../../types/types"
 import "./Applications.module.css"
+import { Chart } from "src/components/Chart"
 
 const fetchApplications = async (elementsCount = 0) => {
   if (!elementsCount) {
@@ -29,13 +30,41 @@ export const Applications = () => {
   const [data, { mutate, refetch }] = createResource(async () =>
     fetchApplications()
   )
+  const [sortBy, setSortBy] = createSignal<null | keyof Application>(null)
   const [isAdding, setIsAdding] = createSignal(false)
+  const [isSorting, setIsSorting] = createSignal(false)
 
   const onAddClick = async (count = 100) => {
+    const start = Date.now()
+    console.log("start", start)
     setIsAdding(true)
     const newData = await fetchApplications(count)
     mutate((prev) => [...prev!, ...newData])
     setIsAdding(false)
+    const fin = Date.now()
+    console.log("fin", fin)
+    const result = new Date(fin - start)
+    console.log("result", result.getTime())
+  }
+  const sortByCol = (col: keyof Application) => {
+    console.log("sortby", col, sortBy())
+    setIsSorting(true)
+    const prevCol = sortBy()
+    setSortBy(col)
+    mutate((prev) => {
+      if (prev) {
+        console.log({ prevCol, col, r: prevCol === col })
+        if (prevCol === col) {
+          setSortBy(null)
+          prev?.sort((a, b) => (a[col] > b[col] ? -1 : 1))
+        } else {
+          prev?.sort((a, b) => (a[col] > b[col] ? 1 : -1))
+        }
+        return [...prev]
+      }
+      return prev
+    })
+    setIsSorting(false)
   }
   return (
     <div class="flex justify-center items-center flex-col mt-8">
@@ -43,6 +72,7 @@ export const Applications = () => {
         when={data()?.length}
         fallback={<div class="animate-ping duration-1000">Loading...</div>}
       >
+        <Chart />
         <div class="flex justify-between flex-1 items-center gap-4">
           <p>{`Count: ${data()?.length}`}</p>
           <Show when={isAdding()}>
@@ -98,7 +128,16 @@ export const Applications = () => {
                   each={Object.keys(data()?.[0] || {})}
                   fallback={<div>Loading...</div>}
                 >
-                  {(key) => <th>{key}</th>}
+                  {(key) => (
+                    <th>
+                      <button
+                        onClick={() => sortByCol(key as keyof Application)}
+                        disabled={isSorting()}
+                      >
+                        {key}
+                      </button>
+                    </th>
+                  )}
                 </For>
               </tr>
             </thead>
@@ -108,6 +147,7 @@ export const Applications = () => {
                   <tr>
                     <td>{item.id}</td>
                     <td>{item.name}</td>
+                    <td>{item.price}</td>
                     <td>
                       <ul>
                         {item.users.map((user) => (

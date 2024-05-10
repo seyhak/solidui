@@ -29,7 +29,6 @@ export const applicationFactory = (): Application => {
   return {
     id: crypto.randomUUID(),
     name: generateRandomString(),
-    price: generateRandomIntInRange(1000000, 10),
     users: Array.from({ length: generateRandomIntInRange(10) }, userFactory),
     isActive: !!(generateRandomIntInRange(2) - 1),
   }
