@@ -1,12 +1,14 @@
-import { For, Show, createResource } from "solid-js"
+import { For, Show, createResource, createSignal } from "solid-js"
 import { applicationFactory } from "src/utils/factories"
 import { Application } from "../../types/types"
 import "./Applications.module.css"
 
-const fetchApplications = async () => {
-  const MAX = 1000
-  const MIN = 100
-  const elementsCount = Math.floor(Math.random() * (MAX - MIN) + MIN)
+const fetchApplications = async (elementsCount = 0) => {
+  if (!elementsCount) {
+    const MAX = 1000
+    const MIN = 100
+    elementsCount = Math.floor(Math.random() * (MAX - MIN) + MIN)
+  }
   const howLongToWait = Math.floor(Math.random() * 5) * 1000
   const data = await new Promise<Application[]>((resolve, rej) => {
     console.log({ howLongToWait, elementsCount })
@@ -18,14 +20,23 @@ const fetchApplications = async () => {
       }
       console.log({ result })
       resolve(result)
-    }, howLongToWait)
+    }, 0)
   })
   return data
 }
 
 export const Applications = () => {
-  const [data, { mutate, refetch }] = createResource(fetchApplications)
+  const [data, { mutate, refetch }] = createResource(async () =>
+    fetchApplications()
+  )
+  const [isAdding, setIsAdding] = createSignal(false)
 
+  const onAddClick = async (count = 100) => {
+    setIsAdding(true)
+    const newData = await fetchApplications(count)
+    mutate((prev) => [...prev!, ...newData])
+    setIsAdding(false)
+  }
   return (
     <div class="flex justify-center items-center flex-col mt-8">
       <Show
@@ -34,13 +45,49 @@ export const Applications = () => {
       >
         <div class="flex justify-between flex-1 items-center gap-4">
           <p>{`Count: ${data()?.length}`}</p>
+          <Show when={isAdding()}>
+            <div class="animate-ping duration-1000">Loading...</div>
+          </Show>
           <button
             onClick={() => {
               mutate([])
               refetch()
             }}
+            disabled={isAdding()}
           >
             Refetch
+          </button>
+          <button
+            onClick={() => {
+              onAddClick(1000)
+            }}
+            disabled={isAdding()}
+          >
+            + 1000
+          </button>
+          <button
+            onClick={() => {
+              onAddClick(10000)
+            }}
+            disabled={isAdding()}
+          >
+            + 10000
+          </button>
+          <button
+            onClick={() => {
+              onAddClick(100000)
+            }}
+            disabled={isAdding()}
+          >
+            + 100 000
+          </button>
+          <button
+            onClick={() => {
+              onAddClick(1000000)
+            }}
+            disabled={isAdding()}
+          >
+            + 1 000 000
           </button>
         </div>
         <div>
