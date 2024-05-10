@@ -47,13 +47,11 @@ export const Applications = () => {
     console.log("result", result.getTime())
   }
   const sortByCol = (col: keyof Application) => {
-    console.log("sortby", col, sortBy())
     setIsSorting(true)
     const prevCol = sortBy()
     setSortBy(col)
     mutate((prev) => {
       if (prev) {
-        console.log({ prevCol, col, r: prevCol === col })
         if (prevCol === col) {
           setSortBy(null)
           prev?.sort((a, b) => (a[col] > b[col] ? -1 : 1))
@@ -72,7 +70,7 @@ export const Applications = () => {
         when={data()?.length}
         fallback={<div class="animate-ping duration-1000">Loading...</div>}
       >
-        <Chart />
+        <Chart data={data()} />
         <div class="flex justify-between flex-1 items-center gap-4">
           <p>{`Count: ${data()?.length}`}</p>
           <Show when={isAdding()}>
