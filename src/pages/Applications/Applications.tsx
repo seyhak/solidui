@@ -65,6 +65,7 @@ export const Applications = () => {
     })
     setIsSorting(false)
   }
+
   return (
     <div class="flex justify-center items-center flex-col mt-8">
       <Show
