@@ -31,6 +31,7 @@ export const Applications = () => {
     fetchApplications()
   )
   const [sortBy, setSortBy] = createSignal<null | keyof Application>(null)
+  const [isChartVisible, setChartVisible] = createSignal(false)
   const [isAdding, setIsAdding] = createSignal(false)
   const [isSorting, setIsSorting] = createSignal(false)
 
@@ -64,18 +65,28 @@ export const Applications = () => {
     })
     setIsSorting(false)
   }
+
   return (
     <div class="flex justify-center items-center flex-col mt-8">
       <Show
         when={data()?.length}
         fallback={<div class="animate-ping duration-1000">Loading...</div>}
       >
-        <Chart data={data()} />
+        <Show when={isChartVisible()}>
+          <Chart data={data()} />
+        </Show>
         <div class="flex justify-between flex-1 items-center gap-4">
           <p>{`Count: ${data()?.length}`}</p>
           <Show when={isAdding()}>
             <div class="animate-ping duration-1000">Loading...</div>
           </Show>
+          <button
+            onClick={() => {
+              setChartVisible(prev => !prev)
+            }}
+          >
+            Switch chart
+          </button>
           <button
             onClick={() => {
               mutate([])
