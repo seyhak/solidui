@@ -20,7 +20,7 @@ const Home = lazy(() => import("./pages/Home/Home"))
 
 render(
   () => (
-    <Router root={Layout}>
+    <Router base="/solidui/" root={Layout}>
       <Route path="/" component={Home} />
       <Route path="/intro" component={Intro} />
       <Route path="/applications">
