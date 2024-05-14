@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "_build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "lint": "prettier ./src --write"
   },
