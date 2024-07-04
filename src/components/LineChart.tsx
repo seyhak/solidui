@@ -21,7 +21,7 @@ export function LinePlot(props: any) {
     )
   )
   const [yVisible, setYVisible] = createSignal(
-    scaleLinear(extent(props.data.slice(0)), [
+    scaleLinear(extent(props.data.slice(0)) as any, [
       props.height - props.marginBottom,
       props.marginTop,
     ])
@@ -44,7 +44,7 @@ export function LinePlot(props: any) {
     }, timeout)
   })
   // const x = scaleLinear([0, props.data.length - 1 - counter()], [props.marginLeft, props.width - props.marginRight]);
-  const y = scaleLinear(extent(props.data), [
+  const y = scaleLinear(extent(props.data) as any, [
     props.height - props.marginBottom,
     props.marginTop,
   ])

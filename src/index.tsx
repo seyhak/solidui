@@ -17,12 +17,16 @@ const Application = lazy(
   () => import("./pages/Applications/Application/Application")
 )
 const Home = lazy(() => import("./pages/Home/Home"))
+const Tanks = lazy(() => import("./pages/Tanks/Tanks"))
+const TanksJS = lazy(() => import("./pages/TanksJS/TanksJS"))
 
 render(
   () => (
     <Router base="/solidui/" root={Layout}>
       <Route path="/" component={Home} />
       <Route path="/intro" component={Intro} />
+      <Route path="/tanks" component={Tanks} />
+      <Route path="/tanksjs" component={TanksJS} />
       <Route path="/applications">
         <Route path="/" component={Applications} />
         <Route path="/:name" component={Application} />

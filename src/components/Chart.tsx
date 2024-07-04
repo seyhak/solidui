@@ -1,5 +1,5 @@
 import { Application } from "src/types/types"
-import { Show, createEffect, createMemo, createSignal } from "solid-js"
+import { createEffect, createMemo, createSignal } from "solid-js"
 import { LinePlot } from "./LineChart"
 
 type ChartProps = {
