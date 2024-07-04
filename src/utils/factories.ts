@@ -1,6 +1,6 @@
 import { Application } from "../types/types"
 
-const generateRandomIntInRange = (max: number, min = 0) =>
+export const generateRandomIntInRange = (max: number, min = 0) =>
   Math.floor(Math.random() * (max - min) + min)
 
 const generateRandomString = (len = 15) => {

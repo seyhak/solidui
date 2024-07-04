@@ -36,6 +36,8 @@ export const Layout = (props: any) => {
         >
           <A href="/">Home</A>
           <A href="/intro">Intro</A>
+          <A href="/tanks">Tanks</A>
+          <A href="/tanksjs">TanksJS</A>
           <A href="/applications">Applications</A>
         </nav>
         <button class="mt-2 mx-2" onClick={onThemeClick}>
@@ -49,6 +51,7 @@ export const Layout = (props: any) => {
       >
         <main class="flex flex-1 justify-between">{props.children}</main>
         <footer
+          id="footer"
           class={`
         flex flex-col p-4 mt-2 items-center
         `}
