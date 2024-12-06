@@ -7,6 +7,7 @@ import "solid-devtools"
 
 import { lazy } from "solid-js"
 import { Layout } from "./Layout"
+import { ForceChart } from "./components/D3Charts/ForceChart"
 
 const root = document.getElementById("root")
 
@@ -19,10 +20,12 @@ const Application = lazy(
 const Home = lazy(() => import("./pages/Home/Home"))
 const Tanks = lazy(() => import("./pages/Tanks/Tanks"))
 const TanksJS = lazy(() => import("./pages/TanksJS/TanksJS"))
+const ChartsWrapper = lazy(() => import("./pages/Charts/ChartsWrapper"))
+const Charts = lazy(() => import("./pages/Charts/Charts"))
 
 render(
   () => (
-    <Router base="/solidui/" root={Layout}>
+    <Router base="/solidui" root={Layout}>
       <Route path="/" component={Home} />
       <Route path="/intro" component={Intro} />
       <Route path="/tanks" component={Tanks} />
@@ -32,6 +35,10 @@ render(
         <Route path="/:name" component={Application} />
       </Route>
       {/* <Route path="/users" component={Users} /> */}
+      <Route path="/charts" component={ChartsWrapper}>
+        <Route path="/" component={Charts} />
+        <Route path="/force_chart" component={ForceChart} />
+      </Route>
       <Route path="*paramName" component={NotFound} />
     </Router>
   ),
