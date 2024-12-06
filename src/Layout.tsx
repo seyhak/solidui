@@ -39,6 +39,7 @@ export const Layout = (props: any) => {
           <A href="/tanks">Tanks</A>
           <A href="/tanksjs">TanksJS</A>
           <A href="/applications">Applications</A>
+          <A href="/charts/force_chart">Charts</A>
         </nav>
         <button class="mt-2 mx-2" onClick={onThemeClick}>
           {isLightTheme() ? "🌞" : "🌕"}
@@ -49,7 +50,7 @@ export const Layout = (props: any) => {
       flex flex-1 flex-col items-center justify-between max-h-[calc(100dvh-3.5rem)]
       overflow-auto`}
       >
-        <main class="flex flex-1 justify-between">{props.children}</main>
+        <main class="flex flex-1 justify-between w-full items-center">{props.children}</main>
         <footer
           id="footer"
           class={`
