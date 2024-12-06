@@ -3,7 +3,7 @@ import { Application } from "../types/types"
 export const generateRandomIntInRange = (max: number, min = 0) =>
   Math.floor(Math.random() * (max - min) + min)
 
-const generateRandomString = (len = 15) => {
+export const generateRandomString = (len = 15) => {
   const CHARS =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789       "
   let newString = ""
@@ -14,7 +14,7 @@ const generateRandomString = (len = 15) => {
   }
   return newString
 }
-const generateRandomFromArr = (what: any[]) => {
+export const generateRandomFromArr = (what: any[]) => {
   return what[generateRandomIntInRange(what.length - 1)]
 }
 
