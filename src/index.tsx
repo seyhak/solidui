@@ -22,6 +22,7 @@ const Tanks = lazy(() => import("./pages/Tanks/Tanks"))
 const TanksJS = lazy(() => import("./pages/TanksJS/TanksJS"))
 const ChartsWrapper = lazy(() => import("./pages/Charts/ChartsWrapper"))
 const Charts = lazy(() => import("./pages/Charts/Charts"))
+const ThreeD = lazy(() => import("./pages/ThreeD/ThreeD"))
 
 render(
   () => (
@@ -39,6 +40,7 @@ render(
         <Route path="/" component={Charts} />
         <Route path="/force_chart" component={ForceChart} />
       </Route>
+      <Route path="/threed" component={ThreeD} />
       <Route path="*paramName" component={NotFound} />
     </Router>
   ),
